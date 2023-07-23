@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -42,4 +43,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public static function getRoleCustomer() {
+        return 1;
+    }
+
+    public static function getRoleStaff() {
+        return 2;
+    }
+
+    public static function getRoleAdmin() {
+        return 3;
+    }
 }

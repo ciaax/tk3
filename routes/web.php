@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController; //add the ControllerNameSpace
+use App\Http\Controllers\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,11 +26,23 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // Route::resource("/item", ItemController::class);
 
 Route::middleware('auth')->group(function () {
-    Route::get("/item", [ItemController::class, "index"])->name('item');
-    Route::get('/item/create', [ItemController::class, "create"])->name('item.create');
-    Route::get("item/{id}", [ItemController::class, "show"])->name('item.show');
-    Route::get("/item/edit/{id}", [ItemController::class, "edit"])->name('item.edit');
-    Route::get("/item/delete/{id}", [ItemController::class, "destroy"])->name('item.delete');
-    Route::post("/item/update/{id}", [ItemController::class, "update"])->name('item.update');
-    Route::post("/item/store", [ItemController::class, "store"])->name('item.store');
+    Route::prefix("/item")->group(function() {
+        Route::get("/", [ItemController::class, "index"])->name('item');
+        Route::get('/create', [ItemController::class, "create"])->name('item.create');
+        Route::get("/show/{id}", [ItemController::class, "show"])->name('item.show');
+        Route::get("/edit/{id}", [ItemController::class, "edit"])->name('item.edit');
+        Route::get("/delete/{id}", [ItemController::class, "destroy"])->name('item.delete');
+        Route::post("/update/{id}", [ItemController::class, "update"])->name('item.update');
+        Route::post("/store", [ItemController::class, "store"])->name('item.store');
+    });
+
+    Route::prefix("/customer")->group(function() {
+        Route::get("/", [CustomerController::class, "index"])->name('customer');
+        Route::get('/create', [CustomerController::class, "create"])->name('customer.create');
+        Route::get("/show/{id}", [CustomerController::class, "show"])->name('customer.show');
+        Route::get("/edit/{id}", [CustomerController::class, "edit"])->name('customer.edit');
+        Route::get("/delete/{id}", [CustomerController::class, "destroy"])->name('customer.delete');
+        Route::post("/update/{id}", [CustomerController::class, "update"])->name('customer.update');
+        Route::post("/store", [CustomerController::class, "store"])->name('customer.store');
+    });
 });
