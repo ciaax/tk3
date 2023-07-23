@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController; //add the ControllerNameSpace
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\StaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,5 +45,15 @@ Route::middleware('auth')->group(function () {
         Route::get("/delete/{id}", [CustomerController::class, "destroy"])->name('customer.delete');
         Route::post("/update/{id}", [CustomerController::class, "update"])->name('customer.update');
         Route::post("/store", [CustomerController::class, "store"])->name('customer.store');
+    });
+
+    Route::prefix("/staff")->group(function() {
+        Route::get("/", [StaffController::class, "index"])->name('staff');
+        Route::get('/create', [StaffController::class, "create"])->name('staff.create');
+        Route::get("/show/{id}", [StaffController::class, "show"])->name('staff.show');
+        Route::get("/edit/{id}", [StaffController::class, "edit"])->name('staff.edit');
+        Route::get("/delete/{id}", [StaffController::class, "destroy"])->name('staff.delete');
+        Route::post("/update/{id}", [StaffController::class, "update"])->name('staff.update');
+        Route::post("/store", [StaffController::class, "store"])->name('staff.store');
     });
 });
