@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
  
 use Illuminate\Http\Request;
-use App\Models\Item; //add Student Model - Data is coming from the database via Model.
+use App\Models\Item; 
+use Illuminate\Support\Facades\Storage;//add Student Model - Data is coming from the database via Model.
  
 class ItemController extends Controller
 {
@@ -36,9 +37,30 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        Item::create($input);
-        return redirect('item')->with('flash_message', 'Item Addedd!');  
+        $input      = $request->all();
+        $file       = $request->file('gambar');
+        $filename   = str_replace(" ", "_", $request->post('nama')) . '-' . md5(date('Y-m-d H:i:s')) . '.' . $file->extension();
+
+        $path = 'public/images';
+        $path = $file->storeAs($path, $filename);
+
+        if (!$path) {
+            echo "error upload";
+            exit;
+        }
+
+        $item_data = array(
+            "nama"          => $input['nama'],
+            'deskripsi'     => $input['deskripsi'],
+            'jenis'         => $input['jenis'],
+            'stok'          => $input['stok'],
+            'hargabeli'     => $input['hargabeli'],
+            'hargajual'     => $input['hargajual'],
+            'img_path'      => $path
+        );
+
+        Item::create($item_data);
+        return redirect('item')->with('status', 'Item Addedd!');  
     }
  
     /**
@@ -50,6 +72,7 @@ class ItemController extends Controller
     public function show($id)
     {
         $item = Item::find($id);
+        $item->img_path = Storage::url($item->img_path);
         return view('items.show')->with('items', $item);
     }
  
@@ -62,6 +85,8 @@ class ItemController extends Controller
     public function edit($id)
     {
         $item = Item::find($id);
+        $item->img_path = Storage::url($item->img_path);
+
         return view('items.edit')->with('items', $item);
     }
  
@@ -74,10 +99,35 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $item = Item::find($id);
-        $input = $request->all();
-        $item->update($input);
-        return redirect('item')->with('flash_message', 'Item Updated!');  
+        $item   = Item::find($id);
+        $input  = $request->all();
+
+        $file   = $request->file('gambar');
+        $path   = $item->img_path;
+        if (isset($file)) {
+            $filename   = str_replace(" ", "_", $request->post('nama')) . '-' . md5(date('Y-m-d H:i:s')) . '.' . $file->extension();
+
+            $path = 'public/images';
+            $path = $file->storeAs($path, $filename);
+
+            if (!$path) {
+                echo "error upload";
+                exit;
+            }
+        }
+
+        $item_data = array(
+            "nama"          => $input['nama'],
+            'deskripsi'     => $input['deskripsi'],
+            'jenis'         => $input['jenis'],
+            'stok'          => $input['stok'],
+            'hargabeli'     => $input['hargabeli'],
+            'hargajual'     => $input['hargajual'],
+            'img_path'      => $path
+        );
+
+        $item->update($item_data);
+        return redirect('item')->with('status', 'Item Updated!');  
     }
  
     /**
@@ -89,6 +139,6 @@ class ItemController extends Controller
     public function destroy($id)
     {
         Item::destroy($id);
-        return redirect('item')->with('flash_message', 'Item deleted!');  
+        return redirect('item')->with('status', 'Item deleted!');  
     }
 }

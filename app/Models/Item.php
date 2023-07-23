@@ -10,5 +10,5 @@ class Item extends Model
     use HasFactory;
     protected $table = 'items';
     protected $primaryKey = 'id';
-    protected $fillable = ['nama', 'deskripsi', 'jenis', 'stok', 'hargabeli', 'hargajual'];
+    protected $fillable = ['nama', 'deskripsi', 'jenis', 'stok', 'hargabeli', 'hargajual', 'img_path'];
 }

@@ -18,7 +18,11 @@
                     </head>
                     <body>
                     <div class="container">
-                        @yield('tablecontent')
+                        <div class="row" style="text-align: center">
+                            <div class="title mb-2">
+                                <h3>Welcome to CRUD APP</h3>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
