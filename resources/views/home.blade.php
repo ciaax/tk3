@@ -20,19 +20,7 @@
                     <div class="container">
                         <div class="row" style="text-align: center">
                             <div class="title mb-2">
-                                <h3>Manage</h3>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="{{ route('item') }}" class="btn btn-primary">Items</a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="#" class="btn btn-info">Staff</a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="#" class="btn btn-warning">Users</a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="#" class="btn btn-success">Sales</a>
+                                <h3>Welcome to CRUD APP</h3>
                             </div>
                         </div>
                     </div>
