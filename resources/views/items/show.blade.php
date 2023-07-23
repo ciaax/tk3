@@ -18,12 +18,36 @@
                   </head>
                   <body>
                   <div class="container">
-                    <h5 class="card-title">Nama : {{ $items->nama }}</h5>
-                    <p class="card-text">Deskripsi : {{ $items->deskripsi }}</p>
-                    <p class="card-text">Jenis : {{ $items->jenis }}</p>
-                    <p class="card-text">Stok : {{ $items->stok }}</p>
-                    <p class="card-text">Harga Beli : {{ $items->hargabeli }}</p>
-                    <p class="card-text">Harga Jual : {{ $items->hargajual }}</p>
+                    <table class="table">
+                      <tr>
+                        <td>Nama</td>
+                        <td>{{ $items->nama }}</td>
+                      </tr>
+                      <tr>
+                        <td>Deskripsi</td>
+                        <td>{{ $items->deskripsi }}</td>
+                      </tr>
+                      <tr>
+                        <td>Jenis</td>
+                        <td>{{ $items->jenis }}</td>
+                      </tr>
+                      <tr>
+                        <td>Stok</td>
+                        <td>{{ number_format($items->stok) }}</td>
+                      </tr>
+                      <tr>
+                        <td>Harga Beli</td>
+                        <td>Rp {{ number_format($items->hargabeli) }}</td>
+                      </tr>
+                      <tr>
+                        <td>Harga Jual</td>
+                        <td>Rp {{ number_format($items->hargajual) }}</td>
+                      </tr>
+                      <tr>
+                        <td>Gambar</td>
+                        <td><img src="{{ $items->img_path }}"/></td>
+                      </tr>
+                    </table>
                   </div>
                   </body>
               </div>

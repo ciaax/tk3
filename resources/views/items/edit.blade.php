@@ -18,7 +18,7 @@
                   </head>
                   <body>
                   <div class="container">
-                    <form action="{{ url('item/update/' .$items->id) }}" method="post">
+                    <form action="{{ route('item.update', $items->id) }}" method="post" enctype="multipart/form-data">
                       {!! csrf_field() !!}
                       <input type="hidden" name="id" id="id" value="{{$items->id}}" id="id" />
                       <label>Nama</label></br>
@@ -28,11 +28,14 @@
                       <label>Jenis</label></br>
                       <input type="text" name="jenis" id="jenis" value="{{$items->jenis}}" class="form-control"></br>
                       <label>Stok</label></br>
-                      <input type="integer" name="stok" id="stok" value="{{$items->stok}}" class="form-control"></br>
+                      <input type="number" name="stok" id="stok" value="{{$items->stok}}" class="form-control"></br>
                       <label>Harga Beli</label></br>
-                      <input type="integer" name="hargabeli" id="hargabeli" value="{{$items->hargabeli}}" class="form-control"></br>
+                      <input type="number" name="hargabeli" id="hargabeli" value="{{$items->hargabeli}}" class="form-control"></br>
                       <label>Harga Jual</label></br>
-                      <input type="integer" name="hargajual" id="hargajual" value="{{$items->hargajual}}" class="form-control"></br>
+                      <input type="number" name="hargajual" id="hargajual" value="{{$items->hargajual}}" class="form-control"></br>
+                      <label>Gambar</label></br>
+                      <img src="{{ $items->img_path }}" />
+                      <input type="file" name="gambar" id="hargajual" class="form-control mt-2" accept="image/*"></br>
                       <input type="submit" value="Update" class="btn btn-success"></br>
                   </form>
                   </div>
