@@ -18,7 +18,23 @@
                     </head>
                     <body>
                     <div class="container">
-                        @yield('tablecontent')
+                        <div class="row" style="text-align: center">
+                            <div class="title mb-2">
+                                <h3>Manage</h3>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="{{ route('item') }}" class="btn btn-primary">Items</a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="#" class="btn btn-info">Staff</a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="#" class="btn btn-warning">Users</a>
+                            </div>
+                            <div class="col-md-3">
+                                <a href="#" class="btn btn-success">Sales</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
