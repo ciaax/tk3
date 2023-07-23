@@ -30,6 +30,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        @if(Auth::user()->role !== Auth::user()->getRoleCustomer())
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('item') }}">{{ __('Items') }}</a>
                         </li>
@@ -40,8 +41,18 @@
                             <a class="nav-link" href="{{ route('staff') }}">{{ __('Staff') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('item') }}">{{ __('Sales') }}</a>
+                            <a class="nav-link" href="{{ route('sales') }}">{{ __('Sales') }}</a>
                         </li>
+                        @endif
+                        @if(Auth::user()->role == Auth::user()->getRoleCustomer())
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('item') }}">{{ __('Items') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('sales') }}">{{ __('Sales') }}</a>
+                        </li>
+                        @endif
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -63,6 +74,7 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
+                                    
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

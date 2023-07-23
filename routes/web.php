@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController; //add the ControllerNameSpace
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\SalesController;
+use App\Models\Sales;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +57,17 @@ Route::middleware('auth')->group(function () {
         Route::get("/delete/{id}", [StaffController::class, "destroy"])->name('staff.delete');
         Route::post("/update/{id}", [StaffController::class, "update"])->name('staff.update');
         Route::post("/store", [StaffController::class, "store"])->name('staff.store');
+    });
+
+
+    Route::prefix("/sales")->group(function() {
+        Route::get("/", [SalesController::class, "index"])->name('sales');
+        Route::get('/create', [SalesController::class, "create"])->name('sales.create');
+        Route::get("/show/{id}", [SalesController::class, "show"])->name('sales.show');
+        Route::get("/edit/{id}", [SalesController::class, "edit"])->name('sales.edit');
+        Route::get("/delete/{id}", [SalesController::class, "destroy"])->name('sales.delete');
+        Route::post("/update/{id}", [SalesController::class, "update"])->name('sales.update');
+        Route::post("/store", [SalesController::class, "store"])->name('sales.store');
+        Route::post("/buy", [SalesController::class, "buy"])->name('item.buy');
     });
 });
