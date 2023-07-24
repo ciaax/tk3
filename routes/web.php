@@ -62,13 +62,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix("/sales")->group(function() {
         Route::get("/", [SalesController::class, "index"])->name('sales');
-        Route::get('/create', [SalesController::class, "create"])->name('sales.create');
         Route::get("/show/{id}", [SalesController::class, "show"])->name('sales.show');
-        Route::get("/edit/{id}", [SalesController::class, "edit"])->name('sales.edit');
-        Route::get("/delete/{id}", [SalesController::class, "destroy"])->name('sales.delete');
-        Route::post("/update/{id}", [SalesController::class, "update"])->name('sales.update');
         Route::get("/submit/{id}", [SalesController::class, "submit"])->name('sales.submit');
-        Route::post("/store", [SalesController::class, "store"])->name('sales.store');
         Route::post("/buy", [SalesController::class, "buy"])->name('item.buy');
     });
 });
