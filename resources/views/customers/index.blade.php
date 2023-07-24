@@ -45,7 +45,9 @@
                                     <td>
                                         <a href="{{ route('customer.show', $customer->id) }}" title="View customer"><button class="btn btn-info btn-sm mt-1"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a> &nbsp;
                                         <a href="{{ route('customer.edit', $customer->id) }}" title="Edit customer"><button class="btn btn-primary btn-sm mt-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a> &nbsp;
+                                        @if(Auth::user()->role == Auth::user()->getRoleAdmin())
                                         <a href="{{ route('customer.delete', $customer->id) }}" title="Delete customer"><button class="btn btn-danger btn-sm mt-1"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Delete</button></a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

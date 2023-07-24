@@ -30,6 +30,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
+                        @guest
+                        @else
+
                         @if(Auth::user()->role !== Auth::user()->getRoleCustomer())
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('item') }}">{{ __('Items') }}</a>
@@ -52,6 +55,7 @@
                             <a class="nav-link" href="{{ route('sales') }}">{{ __('Sales') }}</a>
                         </li>
                         @endif
+                        @endguest
 
                     </ul>
 

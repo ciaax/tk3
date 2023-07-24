@@ -19,7 +19,7 @@
 
                     <body>
                         <form action="{{ route('item.buy')}}" method="post">
-
+                        @csrf
                             <div class="container">
                                 @if(Auth::user()->role !== Auth::user()->getRoleCustomer())
 
@@ -76,7 +76,7 @@
                                                     <div class="">
                                                         <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 col-xl-6">
 
-                                                            <input type="number" name="id_barang-{{ $item->id }}" min="1" max="{{$item->stok}}" value="" placeholder="Jumlah" class="form-control">
+                                                            <input type="number" name="id_item-{{ $item->id }}" min="1" max="{{$item->stok}}" value="" placeholder="Jumlah" class="form-control">
                                                         </div>
                                                     </div>
 

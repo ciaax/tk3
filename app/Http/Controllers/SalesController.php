@@ -13,10 +13,27 @@ class SalesController extends Controller
      */
     public function buy(Request $request)
     {
-        $input  = $request->all();
+        $input  = json_decode(json_encode($request->all()), true);
+        $resultArray = array_filter($input, function($key) use($input) {
+            return strpos($key, 'id_item-') === 0 && $input[$key];
+         }, ARRAY_FILTER_USE_KEY);
 
-        dd($input);
-        return 0;
+        if(count($resultArray)){
+
+            $sales = Sales::create([
+                'user_id'=>$request->user()->id,
+                'submit_user_id'=>null,
+            ]);
+            foreach($resultArray as $item_id => $qty)
+            $orders = \DB::table('orders')->insert([
+                'sales_id'=>$sales->id,
+                'item_id'=>explode('id_item-',$item_id)[1],
+                'qty'=>$qty,
+            ]);
+
+            
+        }
+        return redirect(route('sales'));
     }
 
 
@@ -25,7 +42,9 @@ class SalesController extends Controller
      */
     public function index()
     {
-        //
+        $sales = Sales::getAllSales();
+
+        return view ('sales.index')->with('sales', $sales);
     }
 
     /**
@@ -33,7 +52,7 @@ class SalesController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -47,9 +66,30 @@ class SalesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Sales $sales)
+    public function show(Sales $sales, $id)
     {
-        //
+        $items = Sales::getSale($id)[0];
+        foreach ($items->orders as $key => $val) {
+            $items->orders[$key] = (object) array_merge((array) $items->orders[$key], (array) $items->orders[$key]->items);
+        }
+        // dd($items);
+        return view ('sales.show')->with('sales', $items);
+    }
+
+
+    /**
+     * Submit the specified resource.
+     */
+    public function submit(Request $request, $id)
+    {
+        $items = Sales::find($id);
+        $items->submit_user_id = $request->user()->id;
+        $items->update();
+        foreach((Sales::getSale($id))[0]->orders as $order){
+            \DB::table('items')->where(["id"=>$order->item_id])->update(["stok"=>$order->items->stok-$order->qty?$order->items->stok-$order->qty:0]);
+        }
+        // dd($items);
+        return redirect(route('sales'));
     }
 
     /**
