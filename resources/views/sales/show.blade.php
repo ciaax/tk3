@@ -17,7 +17,15 @@
                   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
                   </head>
                   <body>
-                    @foreach($sales->orders as $items)
+                    @if (count($sales->orders))
+                    @foreach($sales->orders as $key=>$items)
+                    @if(!isset($items->nama ))
+                  <div class="container">
+                    Item dengan id {{$items->item_id}} telah di hapus.
+                  </div>
+                    @endif
+                    @if(isset($items->nama ))
+
                   <div class="container">
                     <table class="table">
                       <tr>
@@ -50,7 +58,9 @@
                       </tr>
                     </table>
                   </div>
+                  @endif
                   @endforeach
+                  @endif
                   </body>
               </div>
           </div>

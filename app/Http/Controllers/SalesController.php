@@ -68,7 +68,7 @@ class SalesController extends Controller
      */
     public function show(Sales $sales, $id)
     {
-        $items = Sales::getSale($id)[0];
+        $items = Sales::getSale($id);
         foreach ($items->orders as $key => $val) {
             $items->orders[$key] = (object) array_merge((array) $items->orders[$key], (array) $items->orders[$key]->items);
         }
@@ -85,7 +85,7 @@ class SalesController extends Controller
         $items = Sales::find($id);
         $items->submit_user_id = $request->user()->id;
         $items->update();
-        foreach((Sales::getSale($id))[0]->orders as $order){
+        foreach((Sales::getSale($id))->orders as $order){
             \DB::table('items')->where(["id"=>$order->item_id])->update(["stok"=>$order->items->stok-$order->qty?$order->items->stok-$order->qty:0]);
         }
         // dd($items);

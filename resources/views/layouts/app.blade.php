@@ -21,8 +21,22 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                
+                    @if (Auth::user())
+                        @if (Auth::user()->role == Auth::user()->getRoleCustomer())
+                            Customer
+                        @elseif (Auth::user()->role == Auth::user()->getRoleStaff())
+                            Staff
+                        @elseif (Auth::user()->role == Auth::user()->getRoleAdmin())
+                            Admin
+                        @else
+                            Admin
+                        @endif
+                    @else
+                        {{ config('app.name', 'Laravel') }}
+                    @endif
+                
+                                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -40,9 +54,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('customer') }}">{{ __('Customers') }}</a>
                         </li>
+                        @if(Auth::user()->role == Auth::user()->getRoleAdmin() || !Auth::user()->role)
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('staff') }}">{{ __('Staff') }}</a>
                         </li>
+                        @endif
+
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('sales') }}">{{ __('Sales') }}</a>
                         </li>

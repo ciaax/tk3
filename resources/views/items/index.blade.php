@@ -49,6 +49,7 @@
                                             @endif
                                             @if(Auth::user()->role == Auth::user()->getRoleCustomer())
                                             <th>Jumlah</th>
+                                            <th>Action</th>
 
                                             @endif
                                         </tr>
@@ -66,25 +67,30 @@
 
                                             <td>
                                                 @if(Auth::user()->role !== Auth::user()->getRoleCustomer())
-                                                <a href="{{ route('item.show', $item->id) }}" title="View Item"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a> &nbsp;
-                                                <a href="{{ route('item.edit', $item->id) }}" title="Edit Item"><button class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a> &nbsp;
-                                                <a href="{{ route('item.delete', $item->id) }}" title="Delete Item"><button class="btn btn-danger btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Delete</button></a>
+                                                <a href="{{ route('item.show', $item->id) }}" title="View Item" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</a> &nbsp;
+                                                <a href="{{ route('item.edit', $item->id) }}" title="Edit Item" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a> &nbsp;
+                                                <a href="{{ route('item.delete', $item->id) }}" title="Delete Item" class="btn btn-danger btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Delete</a>
                                                 @endif
                                                 @if(Auth::user()->role == Auth::user()->getRoleCustomer() && $item->stok)
                                                 <div class="container">
 
-                                                    <div class="">
-                                                        <div class="col-md-6 col-sm-6 col-xs-6 col-lg-6 col-xl-6">
+                                                    
+                                                        <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-xl-12">
 
                                                             <input type="number" name="id_item-{{ $item->id }}" min="1" max="{{$item->stok}}" value="" placeholder="Jumlah" class="form-control">
                                                         </div>
-                                                    </div>
+                                                    
 
                                                 </div>
                             </div>
+                            
                             @endif
+                            
+                        </td>
+                        <td>
+                            <a href="{{ route('item.show', $item->id) }}" title="View Item" class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</a> &nbsp;
+                    </td>
 
-                            </td>
                             </tr>
                             @endforeach
                             </tbody>
