@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ItemController; //add the ControllerNameSpace
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\SalesController;
 use App\Models\Sales;
@@ -52,6 +53,10 @@ Route::middleware('auth')->group(function () {
             Route::get("/delete/{id}", [CustomerController::class, "destroy"])->name('customer.delete');
             Route::post("/update/{id}", [CustomerController::class, "update"])->name('customer.update');
             Route::post("/store", [CustomerController::class, "store"])->name('customer.store');
+        });
+
+        Route::prefix("/report")->group(function () {
+            Route::get("/", [ReportController::class, "index"])->name('report');
         });
     });
 
