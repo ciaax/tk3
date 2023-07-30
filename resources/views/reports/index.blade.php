@@ -3,6 +3,36 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">{{ __('All Time Sales Quantity ') }}</div>
+
+                    <div class="card-body">
+                        <div>
+                            <canvas id="pieQty" width="600" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">{{ __('All Time Sales Profit in IDR') }}</div>
+
+                    <div class="card-body">
+
+                        <div>
+
+                            <canvas id="pieProfit" width="600" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container">
+        <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('Sales Report') }}</div>
@@ -14,7 +44,8 @@
                             </div>
                         @endif
 
-                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+                            rel="stylesheet"
                             integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
                             crossorigin="anonymous">
                         </head>
@@ -40,7 +71,7 @@
                                         // $monthly_profit_data = [];
                                         ?>
                                         @foreach ($items as $item)
-                                            <?php 
+                                            <?php
                                             $total_pembelian = $item->qty_total * $item->hargabeli;
                                             $total_penjualan = $item->qty_total * $item->hargajual;
                                             $laba = $total_penjualan - $total_pembelian;
@@ -71,35 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('All Time Sales Quantity ') }}</div>
 
-                    <div class="card-body">
-                       <div>
-                           <canvas id="pieQty" width="600" height="400"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">{{ __('All Time Sales Profit IDR in IDR') }}</div>
-
-                    <div class="card-body">
-                   
-                        <div>
-
-                            <canvas id="pieProfit" width="600" height="400"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div>
 @endsection
@@ -108,14 +111,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
 
-        const qty = document.getElementById('pieQty').getContext('2d');
-        const pie_qty_data = JSON.parse(JSON.stringify({
-            ...{!! json_encode($pie_qty_data) !!}
-        }));
-        console.log(pie_qty_data);
-            
+            const qty = document.getElementById('pieQty').getContext('2d');
+            const pie_qty_data = JSON.parse(JSON.stringify({
+                ...{!! json_encode($pie_qty_data) !!}
+            }));
+
             const pieQty = (new Chart(qty, {
                 type: 'pie',
                 data: {
@@ -125,11 +127,12 @@
                         data: [...Object.values(pie_qty_data).map((i) => Number(i))],
                         backgroundColor: [
                             ...Object.values(pie_qty_data).map(() =>
-                                `rgb(255, 99, ${Math.floor(Math.random() * 256)})`)
+                                `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
+                            )
                         ],
                         hoverOffset: 4
                     }]
-    
+
                 },
                 options: {
                     responsive: true,
@@ -141,37 +144,37 @@
                     // }
                 }
             }));
-    })
+        })
     </script>
-        <script type="text/javascript">
-            document.addEventListener('DOMContentLoaded', function() {
-        
-                const qty = document.getElementById('pieProfit').getContext('2d');
-                const pie_qty_data = JSON.parse(JSON.stringify({
-                    ...{!! json_encode($pie_profit_data) !!}
-                }));
-                console.log(pie_qty_data);
-                    
-                    const pieQty = (new Chart(qty, {
-                        type: 'pie',
-                        data: {
-                            labels: [...Object.keys(pie_qty_data)],
-                            datasets: [{
-                                label: 'All Time Sales Profit IDR',
-                                data: [...Object.values(pie_qty_data).map((i) => Number(i))],
-                                backgroundColor: [
-                                    ...Object.values(pie_qty_data).map(() =>
-                                        `rgb(255, 99, ${Math.floor(Math.random() * 256)})`)
-                                ],
-                                hoverOffset: 4
-                            }]
-            
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: true
-                        }
-                    }));
-            })
-            </script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const qty = document.getElementById('pieProfit').getContext('2d');
+            const pie_qty_data = JSON.parse(JSON.stringify({
+                ...{!! json_encode($pie_profit_data) !!}
+            }));
+
+            const pieQty = (new Chart(qty, {
+                type: 'pie',
+                data: {
+                    labels: [...Object.keys(pie_qty_data)],
+                    datasets: [{
+                        label: 'All Time Sales Profit IDR',
+                        data: [...Object.values(pie_qty_data).map((i) => Number(i))],
+                        backgroundColor: [
+                            ...Object.values(pie_qty_data).map(() =>
+                                `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
+                                )
+                        ],
+                        hoverOffset: 4
+                    }]
+
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true
+                }
+            }));
+        })
+    </script>
 @endsection

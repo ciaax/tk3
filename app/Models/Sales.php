@@ -30,21 +30,21 @@ class Sales extends Model
                 $sales[$key]->orders = \DB::select("SELECT 
                 * FROM orders WHERE sales_id = ?", [$sales[$key]->id]);
                 $sales[$key]->total = 0;
-                if(count($sales[$key]->orders))
-                foreach ($sales[$key]->orders as $keyOrder => $val) {
-    
+                if (count($sales[$key]->orders))
                     foreach ($sales[$key]->orders as $keyOrder => $val) {
-                        $item = \DB::select("SELECT 
+
+                        foreach ($sales[$key]->orders as $keyOrder => $val) {
+                            $item = \DB::select("SELECT 
                         * FROM items WHERE id = ?", [$sales[$key]->orders[$keyOrder]->item_id]);
-                        $sales[$key]->orders[$keyOrder]->items = count($item)?$item[0]:(new stdClass());
+                            $sales[$key]->orders[$keyOrder]->items = count($item) ? $item[0] : (new stdClass());
+                        }
                     }
-                }
             }
-    
+
             return $sales;
         } catch (\Throwable $th) {
 
-           return [];
+            return [];
         }
     }
 
@@ -58,24 +58,23 @@ class Sales extends Model
                                 JOIN users u ON u.id = s.user_id
                                 WHERE s.id = ?", [$sales_id]);
 
-        foreach ($sales as $key => $val) {
-            $sales[$key]->orders = \DB::select("SELECT 
+            foreach ($sales as $key => $val) {
+                $sales[$key]->orders = \DB::select("SELECT 
             * FROM orders WHERE sales_id = ?", [$sales[$key]->id]);
-            $sales[$key]->total = 0;
-            if(count($sales[$key]->orders))
-            foreach ($sales[$key]->orders as $keyOrder => $val) {
-                $item = \DB::select("SELECT 
+                $sales[$key]->total = 0;
+                if (count($sales[$key]->orders))
+                    foreach ($sales[$key]->orders as $keyOrder => $val) {
+                        $item = \DB::select("SELECT 
                 * FROM items WHERE id = ?", [$sales[$key]->orders[$keyOrder]->item_id]);
-                $sales[$key]->orders[$keyOrder]->items = count($item)?$item[0]:(new stdClass());
+                        $sales[$key]->orders[$keyOrder]->items = count($item) ? $item[0] : (new stdClass());
+                    }
             }
-        }
 
-        return $sales[0];
+            return $sales[0];
         } catch (\Throwable $th) {
             $customObject = new stdClass();
-            $customObject->orders = []; 
+            $customObject->orders = [];
             return $customObject;
         }
-        
     }
 }
