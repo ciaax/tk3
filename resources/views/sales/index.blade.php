@@ -27,7 +27,7 @@
                                             <th>#</th>
                                             <th>ID Transaksi</th>
                                             <th>Pemesan</th>
-                                            <th>Jumlah Barang</th>
+                                            <th>Jumlah Jenis Barang</th>
                                             <th>Pensubmit</th>
                                             
                                             <th>Action</th> 
